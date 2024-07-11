@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clona el repositorio
-                git 'https://github.com/ssepulvedamcl/my-spring-boot-app.git'
+                git branch: 'main', url: 'https://github.com/ssepulvedamcl/my-spring-boot-app.git'
             }
         }
         stage('Build') {
