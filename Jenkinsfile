@@ -77,9 +77,9 @@ pipeline {
                     """
 
                     // Despliega en Kubernetes
-                    withKubeConfig([credentialsId: env.KUBE_CONFIG_PATH]) {
+                    //withKubeConfig([credentialsId: env.KUBE_CONFIG_PATH]) {
                         sh 'kubectl apply -f k8s-deployment.yaml'
-                    }
+                    //}
                 }
             }
         }
