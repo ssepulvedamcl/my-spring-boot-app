@@ -83,15 +83,13 @@ pipeline {
                 }
             }
         }
+	stage('Cleanup'){
+		steps{
+			//Limpieza despues de cada build
+			cleanWs()
+		}
+	}
     }
 
-    post {
-        always {
-		script {
-			//Limpieza despues de cada build
-			cleanWs()	
-		}
-        }
-    }
 }
 
