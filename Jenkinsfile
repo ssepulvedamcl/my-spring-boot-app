@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Construye el proyecto Maven
-                sh './mvnw clean package'
+                sh 'mvn clean package'
             }
         }
         stage('Build Docker Image') {
