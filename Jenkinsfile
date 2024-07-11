@@ -5,20 +5,20 @@ pipeline {
         // Define environment variables
         DOCKER_IMAGE = "ssepulvedacl/my-spring-boot-app"
         REGISTRY = "hub.docker.com" // e.g., Docker Hub or any other registry
-        KUBE_CONFIG_PATH = credentials('kube-config') // Credential ID for Kubernetes config
+        //KUBE_CONFIG_PATH = credentials('kube-config') // Credential ID for Kubernetes config
     }
 
     stages {
         stage('Checkout') {
             steps {
                 // Clona el repositorio
-                git 'https://github.com/ssepulvedamcl/my-spring-boot-app.git'
+                git branch: 'main', url: 'https://github.com/ssepulvedamcl/my-spring-boot-app.git'
             }
         }
         stage('Build') {
             steps {
                 // Construye el proyecto Maven
-                sh './mvnw clean package'
+                sh 'mvn clean package'
             }
         }
         stage('Build Docker Image') {
