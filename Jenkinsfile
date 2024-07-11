@@ -87,8 +87,10 @@ pipeline {
 
     post {
         always {
-            // Limpieza después de cada build
-            cleanWs()
+		node {
+			//Limpieza despues de cada build
+			cleanWs()	
+		}
         }
     }
 }
