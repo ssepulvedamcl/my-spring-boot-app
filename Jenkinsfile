@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     // Crea un archivo de despliegue para Kubernetes
-                    sh """
+                    sh '''
                     cat <<EOF > k8s-deployment.yaml
                     apiVersion: apps/v1
                     kind: Deployment
@@ -74,7 +74,7 @@ pipeline {
                       selector:
                         app: my-spring-boot-app
                     EOF
-                    """
+                    '''
 
                     // Despliega en Kubernetes
                     //withKubeConfig([credentialsId: env.KUBE_CONFIG_PATH]) {
