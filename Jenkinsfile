@@ -4,7 +4,7 @@ pipeline {
     environment {
         // Define environment variables
         DOCKER_IMAGE = "ssepulvedacl/my-spring-boot-app"
-        REGISTRY = "hub.docker.com" // e.g., Docker Hub or any other registry
+        REGISTRY = "registry.hub.docker.com" // e.g., Docker Hub or any other registry
         //KUBE_CONFIG_PATH = credentials('kube-config') // Credential ID for Kubernetes config
     }
 
