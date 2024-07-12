@@ -57,8 +57,8 @@ pipeline {
                             app: my-spring-boot-app
                         spec:
                           containers:
-                          - name: ssepulvedacl/my-spring-boot-app
-                            image: ${env.REGISTRY}/${DOCKER_IMAGE}:${env.BUILD_ID}
+                          - name: my-spring-boot-app-container
+                            image: ${REGISTRY}/${DOCKER_IMAGE}:${env.BUILD_ID}
                             ports:
                             - containerPort: 8080
                     ---
