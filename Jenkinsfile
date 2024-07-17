@@ -5,7 +5,8 @@ pipeline {
         // Define environment variables
         DOCKER_IMAGE = "ssepulvedacl/my-spring-boot-app"
         REGISTRY = "registry.hub.docker.com" // e.g., Docker Hub or any other registry
-        //KUBE_CONFIG_PATH = credentials('kube-config') // Credential ID for Kubernetes config
+        //KUBE_CREDENTIALS_ID = 'kube-config' // Credential ID for Kubernetes config
+        //DOCKER_CREDENTIALS_ID = 'docker-credentials-id' // Credential ID for Docker Registry
     }
 
     stages {
@@ -27,7 +28,7 @@ pipeline {
                     // Construye la imagen Docker
                     def image = docker.build("${DOCKER_IMAGE}:${env.BUILD_ID}")
                     // Inicia sesión en el registro Docker
-                    docker.withRegistry("https://${env.REGISTRY}", 'docker-credentials-id') {
+                    docker.withRegistry("https://${env.REGISTRY}", env.DOCKER_CREDENTIALS_ID) {
                         // Empuja la imagen al registro
                         image.push()
                     }
@@ -38,7 +39,7 @@ pipeline {
             steps {
                 script {
                     // Crea un archivo de despliegue para Kubernetes
-                    sh '''
+                    sh """
                     cat <<EOF > k8s-deployment.yaml
                     apiVersion: apps/v1
                     kind: Deployment
@@ -74,22 +75,24 @@ pipeline {
                       selector:
                         app: my-spring-boot-app
                     EOF
-                    '''
+                    """
 
                     // Despliega en Kubernetes
-                    //withKubeConfig([credentialsId: env.KUBE_CONFIG_PATH]) {
+                    //withKubeConfig([credentialsId: env.KUBE_CREDENTIALS_ID]) {
                         sh 'kubectl apply -f k8s-deployment.yaml'
                     //}
                 }
             }
         }
-	stage('Cleanup'){
-		steps{
-			//Limpieza despues de cada build
-			cleanWs()
-		}
-	}
+        stage('Cleanup') {
+            steps {
+                // Limpieza despues de cada build
+                cleanWs()
+            }
+        }
     }
-
 }
+
+
+
 
