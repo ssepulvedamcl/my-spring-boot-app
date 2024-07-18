@@ -7,6 +7,7 @@ pipeline {
         REGISTRY = "registry.hub.docker.com" // e.g., Docker Hub or any other registry
         //KUBE_CREDENTIALS_ID = 'kube-config' // Credential ID for Kubernetes config
         //DOCKER_CREDENTIALS_ID = 'docker-credentials-id' // Credential ID for Docker Registry
+        SONARQUBE_SERVER = 'SonarQube'
     }
 
     stages {
@@ -35,6 +36,7 @@ pipeline {
                 }
             }
         }
+        /*
         stage('Deploy to Kubernetes') {
             steps {
                 script {
@@ -83,7 +85,7 @@ pipeline {
                     //}
                 }
             }
-        }
+        }*/
         stage('Cleanup') {
             steps {
                 // Limpieza despues de cada build
