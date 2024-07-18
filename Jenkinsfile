@@ -23,6 +23,27 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    // Realiza el análisis de SonarQube
+                    def scannerHome = tool 'SonarQube Scanner' // Nombre de la herramienta SonarQube Scanner configurada en Jenkins
+                    withSonarQubeEnv(SONARQUBE_SERVER) {
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=my-spring-boot-app -Dsonar.sources=. -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONARQUBE_TOKEN"
+                    }
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                script {
+                    // Espera y comprueba el resultado del análisis de SonarQube
+                    timeout(time: 1, unit: 'MINUTES') {
+                        waitForQualityGate abortPipeline: true
+                    }
+                }
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script {
